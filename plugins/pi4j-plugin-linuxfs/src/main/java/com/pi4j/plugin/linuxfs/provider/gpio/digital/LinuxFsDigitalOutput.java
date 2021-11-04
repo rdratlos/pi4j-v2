@@ -28,10 +28,14 @@ package com.pi4j.plugin.linuxfs.provider.gpio.digital;
  */
 
 
-import com.pi4j.io.gpio.digital.DigitalOutput;
-import com.pi4j.io.gpio.digital.DigitalOutputBase;
-import com.pi4j.io.gpio.digital.DigitalOutputConfig;
-import com.pi4j.io.gpio.digital.DigitalOutputProvider;
+import com.pi4j.context.Context;
+import com.pi4j.exception.InitializeException;
+import com.pi4j.io.exception.IOException;
+import com.pi4j.io.gpio.digital.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.pi4j.plugin.linuxfs.internal.LinuxGpio;
+
 
 
 /**
@@ -41,6 +45,10 @@ import com.pi4j.io.gpio.digital.DigitalOutputProvider;
  * @version $Id: $Id
  */
 public class LinuxFsDigitalOutput extends DigitalOutputBase implements DigitalOutput {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected int address = -1;
+    protected LinuxGpio gpio;
+
     /**
      * <p>Constructor for LinuxFsDigitalOutput.</p>
      *
@@ -49,5 +57,42 @@ public class LinuxFsDigitalOutput extends DigitalOutputBase implements DigitalOu
      */
     public LinuxFsDigitalOutput(DigitalOutputProvider provider, DigitalOutputConfig config){
         super(provider, config);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public DigitalOutput initialize(Context context) throws InitializeException {
+        super.initialize(context);
+        try {
+            // create new LINUX GPIO instance for this pin address
+            gpio = new LinuxGpio(this.address);
+
+            // export GPIO pin via Linux File System
+            if(!gpio.isExported()) gpio.export();;
+
+            // set GPIO pin to DIRECTION=OUT via Linux File System
+            gpio.direction(LinuxGpio.Direction.OUT);
+
+            // enable GPIO interrupt via Linux File System (if supported)
+            if(gpio.isInterruptSupported()) gpio.interruptEdge(LinuxGpio.Edge.BOTH);
+
+        } catch (java.io.IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new InitializeException(e);
+        }
+        return this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public DigitalOutput state(DigitalState state) throws IOException {
+        try {
+            // set GPIO state via Linux File System
+            gpio.state(state);
+        } catch (java.io.IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new IOException(e.getMessage(), e);
+        }
+        return super.state(state);
     }
 }

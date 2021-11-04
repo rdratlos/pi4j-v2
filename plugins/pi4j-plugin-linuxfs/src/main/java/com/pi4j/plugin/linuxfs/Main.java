@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import com.jcraft.jsch.*;
-import com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd;
+import com.pi4j.plugin.linuxfs.internal.LinuxCmd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

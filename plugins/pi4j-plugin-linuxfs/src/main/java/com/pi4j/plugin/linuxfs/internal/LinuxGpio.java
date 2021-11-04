@@ -1,11 +1,11 @@
-package com.pi4j.plugin.linuxfs.provider.gpio;
+package com.pi4j.plugin.linuxfs.internal;
 
 /*-
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
  * PROJECT       :  Pi4J :: PLUGIN   :: LinuxFS I/O Providers
- * FILENAME      :  LinuxCmd.java
+ * FILENAME      :  LinuxGpio.java
  *
  * This file is part of the Pi4J project. More information about
  * this project can be found here:  https://pi4j.com/
@@ -27,20 +27,21 @@ package com.pi4j.plugin.linuxfs.provider.gpio;
  * #L%
  */
 
+import com.pi4j.io.gpio.digital.DigitalState;
+
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import com.pi4j.io.gpio.digital.DigitalState;
-
 /**
- * <p>LinuxCmd class.</p>
+ * <p>LinuxGpio class.</p>
  *
  * @see "https://www.kernel.org/doc/Documentation/gpio/sysfs.txt"
  * @author Robert Savage (<a href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  * @version $Id: $Id
  */
-public class LinuxCmd {
+public class LinuxGpio {
 
     /** Constant <code>DEFAULT_SYSTEM_PATH="/sys/class/gpio"</code> */
     public static String DEFAULT_SYSTEM_PATH = "/sys/class/gpio";
@@ -64,35 +65,34 @@ public class LinuxCmd {
     }
 
     /**
-     * <p>Constructor for LinuxCmd.</p>
+     * <p>Constructor for LinuxGpio.</p>
      *
      * @param systemPath a {@link java.lang.String} object.
      * @param address a int.
      */
-    public LinuxCmd(String systemPath, int address){
+    public LinuxGpio(String systemPath, int address){
         this.address = address;
         this.systemPath = systemPath;
         this.pinPath = Paths.get(systemPath, String.format("gpio%d", address)).toString();
     }
 
     /**
-     * <p>Constructor for LinuxCmd.</p>
+     * <p>Constructor for LinuxGpio.</p>
      *
      * @param address a int.
      */
-    public LinuxCmd(int address){
+    public LinuxGpio(int address){
         this(DEFAULT_SYSTEM_PATH, address);
     }
 
     /**
      * Export GPIO pin by SoC address
      *
-     * @param address a int.
-     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
      */
-    public static String export(int address) {
-        var path = Paths.get(DEFAULT_SYSTEM_PATH, "export");
-        return String.format("echo %d > %s", address, path.toString());
+    public void export() throws IOException {
+        var path = Paths.get(systemPath, "export");
+        Files.writeString(path, Integer.toString(address));
     }
 
     /**
@@ -128,7 +128,7 @@ public class LinuxCmd {
     /**
      * <p>direction.</p>
      *
-     * @param direction a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Direction} object.
+     * @param direction a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Direction} object.
      * @throws java.io.IOException if any.
      */
     public void direction(Direction direction) throws IOException {
@@ -137,7 +137,7 @@ public class LinuxCmd {
     /**
      * <p>setDirection.</p>
      *
-     * @param direction a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Direction} object.
+     * @param direction a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Direction} object.
      * @throws java.io.IOException if any.
      */
     public void setDirection(Direction direction) throws IOException {
@@ -148,7 +148,7 @@ public class LinuxCmd {
     /**
      * <p>direction.</p>
      *
-     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Direction} object.
+     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Direction} object.
      * @throws java.io.IOException if any.
      */
     public Direction direction() throws IOException {
@@ -157,7 +157,7 @@ public class LinuxCmd {
     /**
      * <p>getDirection.</p>
      *
-     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Direction} object.
+     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Direction} object.
      * @throws java.io.IOException if any.
      */
     public Direction getDirection() throws IOException {
@@ -212,7 +212,7 @@ public class LinuxCmd {
     /**
      * <p>interruptEdge.</p>
      *
-     * @param edge a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Edge} object.
+     * @param edge a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Edge} object.
      * @throws java.io.IOException if any.
      */
     public void interruptEdge(Edge edge) throws IOException {
@@ -221,7 +221,7 @@ public class LinuxCmd {
     /**
      * <p>setInterruptEdge.</p>
      *
-     * @param edge a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Edge} object.
+     * @param edge a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Edge} object.
      * @throws java.io.IOException if any.
      */
     public void setInterruptEdge(Edge edge) throws IOException {
@@ -233,7 +233,7 @@ public class LinuxCmd {
     /**
      * <p>interruptEdge.</p>
      *
-     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Edge} object.
+     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Edge} object.
      * @throws java.io.IOException if any.
      */
     public Edge interruptEdge() throws IOException {
@@ -242,7 +242,7 @@ public class LinuxCmd {
     /**
      * <p>getInterruptEdge.</p>
      *
-     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxCmd.Edge} object.
+     * @return a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio.Edge} object.
      * @throws java.io.IOException if any.
      */
     public Edge getInterruptEdge() throws IOException {

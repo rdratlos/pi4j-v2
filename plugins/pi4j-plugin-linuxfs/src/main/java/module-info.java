@@ -27,17 +27,17 @@ import com.pi4j.plugin.linuxfs.LinuxFsPlugin;
  * #L%
  */
 module com.pi4j.plugin.linuxfs {
-
-    // depends on SLF4J
-    requires org.slf4j;
-
     requires com.pi4j;
     requires com.pi4j.library.linuxfs;
+    requires org.slf4j;
     requires jsch;   // NOTE: this library has not yet been modularized
+
+    uses com.pi4j.extension.Plugin;
 
     exports com.pi4j.plugin.linuxfs;
     exports com.pi4j.plugin.linuxfs.provider.gpio.digital;
+    exports com.pi4j.plugin.linuxfs.provider.i2c;
 
     provides com.pi4j.extension.Plugin
-            with LinuxFsPlugin;
+        with com.pi4j.plugin.linuxfs.LinuxFsPlugin;
 }

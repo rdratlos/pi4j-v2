@@ -43,20 +43,13 @@ public class LinuxFsDigitalOutputProviderImpl extends DigitalOutputProviderBase 
      * <p>Constructor for LinuxFsDigitalOutputProviderImpl.</p>
      */
     public LinuxFsDigitalOutputProviderImpl(){
-        this.id = ID;
-        this.name = NAME;
+        this.id = LinuxFsDigitalOutputProvider.ID;
+        this.name = LinuxFsDigitalOutputProvider.NAME;
     }
 
     /** {@inheritDoc} */
     @Override
     public DigitalOutput create(DigitalOutputConfig config) {
-
-        // export GPIO pin
-        // /sys/class/gpio
-
-        // set GPIO pin direction
-        // /sys/class/gpio/gpio{0}
-
         return new LinuxFsDigitalOutput(this, config);
     }
 }

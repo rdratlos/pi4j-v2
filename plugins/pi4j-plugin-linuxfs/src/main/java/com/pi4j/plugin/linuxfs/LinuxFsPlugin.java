@@ -107,7 +107,8 @@ public class LinuxFsPlugin implements Plugin {
     @Override
     public void initialize(PluginService service) {
 
-        Provider[] providers = { LinuxFsDigitalInputProvider.newInstance(),
+        Provider[] providers = {
+            LinuxFsDigitalInputProvider.newInstance(),
             LinuxFsDigitalOutputProvider.newInstance(),
             LinuxFsI2CProvider.newInstance()
         };
