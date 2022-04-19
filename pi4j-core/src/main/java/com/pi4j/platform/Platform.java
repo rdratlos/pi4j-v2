@@ -115,11 +115,14 @@ public interface Platform extends IOCreator, ProviderProvider, Extension<Platfor
     }
 
     /** {@inheritDoc} */
+    @Override
     default <T extends Provider> T provider(String providerId) throws ProviderNotFoundException {
 
         // first attempt to resolve by direct unique identifier
-        if(providers().containsKey(providerId)){
-            return (T)providers().get(providerId);
+        for(Provider provider : providers().values()) {
+            if (provider.getId().equals(providerId)) {
+                return (T) provider;
+            }
         }
 
         // additionally attempt to resolve the provider by its class name
@@ -144,8 +147,10 @@ public interface Platform extends IOCreator, ProviderProvider, Extension<Platfor
     default boolean hasProvider(String providerId) {
 
         // first attempt to resolve by direct unique identifier
-        if(providers().containsKey(providerId)){
-            return true;
+        for(Provider provider : providers().values()) {
+            if (provider.getId().equals(providerId)) {
+                return true;
+            }
         }
 
         // additionally attempt to resolve the provider by its class name
