@@ -27,9 +27,11 @@ package com.pi4j.plugin.linuxfs.provider.gpio.digital;
  * #L%
  */
 
-import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalOutputConfig;
 import com.pi4j.io.gpio.digital.DigitalOutputProviderBase;
+import com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio;
+import com.pi4j.provider.exception.ProviderException;
+import java.io.IOException;
 
 /**
  * <p>LinuxFsDigitalOutputProviderImpl class.</p>
@@ -49,14 +51,43 @@ public class LinuxFsDigitalOutputProviderImpl extends DigitalOutputProviderBase 
 
     /** {@inheritDoc} */
     @Override
-    public DigitalOutput create(DigitalOutputConfig config) {
+    public LinuxFsDigitalOutput create(DigitalOutputConfig config) {
 
-        // export GPIO pin
-        // /sys/class/gpio
+        LinuxGpio gpio = new LinuxGpio(config.address());
 
-        // set GPIO pin direction
-        // /sys/class/gpio/gpio{0}
+        // Remove hanging GPIO pin in sysfs, e. g. after program crash
+        try {
+            if (gpio.isExported()) {
+                gpio.unexport();
+            }
+        } catch (java.io.IOException e) {
+            throw new ProviderException(e);
+        }
 
-        return new LinuxFsDigitalOutput(this, config);
+        try {
+            gpio.export();
+        } catch (java.io.IOException e) {
+            throw new ProviderException(e);
+        }
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            throw new ProviderException(e);
+        }
+        try {
+            if (!gpio.isExported()) {
+                throw new IOException(String.format("Failed to create sysfs gpio%d device", config.address()));
+            }
+        } catch (java.io.IOException e) {
+            throw new ProviderException(e);
+        }
+
+        try {
+            gpio.direction(LinuxGpio.Direction.OUT);
+        } catch (java.io.IOException e) {
+            throw new ProviderException(e);
+        }
+
+        return new LinuxFsDigitalOutput(gpio, this, config);
     }
 }
