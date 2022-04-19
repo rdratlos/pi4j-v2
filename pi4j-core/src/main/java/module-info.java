@@ -35,6 +35,9 @@ module com.pi4j {
     exports com.pi4j.context;
     exports com.pi4j.exception;
     exports com.pi4j.extension;
+    exports com.pi4j.extension.addonboard;
+    exports com.pi4j.extension.addonboard.io;
+    exports com.pi4j.extension.addonboard.platform;
     exports com.pi4j.extension.exception;
     exports com.pi4j.event;
     exports com.pi4j.io;
@@ -56,4 +59,5 @@ module com.pi4j {
 
     // extensibility service interfaces
     uses com.pi4j.extension.Plugin;
+    uses com.pi4j.extension.addonboard.AddOnBoard;
 }
