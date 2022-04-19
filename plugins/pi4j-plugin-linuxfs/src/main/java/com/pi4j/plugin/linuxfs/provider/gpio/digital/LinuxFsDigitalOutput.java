@@ -28,11 +28,15 @@ package com.pi4j.plugin.linuxfs.provider.gpio.digital;
  */
 
 
+import com.pi4j.context.Context;
+import com.pi4j.exception.ShutdownException;
+import com.pi4j.io.exception.IOException;
 import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalOutputBase;
 import com.pi4j.io.gpio.digital.DigitalOutputConfig;
 import com.pi4j.io.gpio.digital.DigitalOutputProvider;
-
+import com.pi4j.io.gpio.digital.DigitalState;
+import com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio;
 
 /**
  * <p>LinuxFsDigitalOutput class.</p>
@@ -41,13 +45,55 @@ import com.pi4j.io.gpio.digital.DigitalOutputProvider;
  * @version $Id: $Id
  */
 public class LinuxFsDigitalOutput extends DigitalOutputBase implements DigitalOutput {
+
+    private final LinuxGpio gpio;
+
     /**
      * <p>Constructor for LinuxFsDigitalOutput.</p>
      *
+     * @param gpio a {@link com.pi4j.plugin.linuxfs.provider.gpio.LinuxGpio} object.
      * @param provider a {@link com.pi4j.io.gpio.digital.DigitalOutputProvider} object.
      * @param config a {@link com.pi4j.io.gpio.digital.DigitalOutputConfig} object.
      */
-    public LinuxFsDigitalOutput(DigitalOutputProvider provider, DigitalOutputConfig config){
+    public LinuxFsDigitalOutput(LinuxGpio gpio, DigitalOutputProvider provider, DigitalOutputConfig config){
         super(provider, config);
+        this.gpio = gpio;
+    }
+
+
+    /** {@inheritDoc} */
+    @Override
+    public LinuxFsDigitalOutput high() throws IOException {
+        this.state(DigitalState.HIGH);
+        try {
+            this.gpio.state(state());
+        } catch (java.io.IOException e) {
+            throw new IOException(e);
+        }
+        return this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LinuxFsDigitalOutput low() throws IOException {
+        this.state(DigitalState.LOW);
+        try {
+            this.gpio.state(state());
+        } catch (java.io.IOException e) {
+            throw new IOException(e);
+        }
+        return this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LinuxFsDigitalOutput shutdown(Context context) throws ShutdownException {
+        super.shutdown(context);
+        try {
+            this.gpio.unexport();
+        } catch (java.io.IOException e) {
+            throw new IOException(e);
+        }
+        return this;
     }
 }
