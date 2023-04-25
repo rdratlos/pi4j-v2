@@ -249,7 +249,7 @@
         <ant-jsch.version>1.10.8</ant-jsch.version>
         <jsch.version>0.1.55</jsch.version>
         <ant-contrib.version>20020829</ant-contrib.version>
-        <junit.jupiter.version>5.6.2</junit.jupiter.version>
+        <junit.jupiter.version>5.9.2</junit.jupiter.version>
         <junit.platform.version>1.6.2</junit.platform.version>
         <slf4j.version>1.7.32</slf4j.version>
         <jSerialComm.version>2.6.2</jSerialComm.version>
@@ -270,7 +270,7 @@
         <maven-scm-plugin.version>1.9.5</maven-scm-plugin.version>
         <maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
         <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
         <native-maven-plugin.version>1.0-alpha-9</native-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
         <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
@@ -334,18 +334,12 @@
 
             <!-- UNIT TESTING DEPENDENCIES -->
             <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
                 <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -372,12 +366,12 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -434,10 +428,24 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>me.fabriciorby</groupId>
+                            <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+                            <version>1.1.0</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
                         <excludes>
                             <exclude>**/*UsingTestHarness.java</exclude>
                         </excludes>
+                        <reportFormat>plain</reportFormat>
+                        <consoleOutputReporter>
+                            <disable>true</disable>
+                        </consoleOutputReporter>
+                        <statelessTestsetInfoReporter
+                                implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporterUnicode">
+                        </statelessTestsetInfoReporter>
                     </configuration>
                 </plugin>
 
