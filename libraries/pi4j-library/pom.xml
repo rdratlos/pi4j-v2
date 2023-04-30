@@ -12,6 +12,7 @@
 
     <!-- MAVEN ARTIFACT INFORMATION -->
     <artifactId>pi4j-library</artifactId>
+    <version>2.2.1</version>
     <name>Pi4J :: LIBRARY  :: Libraries Parent POM</name>
     <description>Pi4J Plugin Parent Maven POM</description>
     <packaging>pom</packaging>

@@ -45,24 +45,24 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-plugin-pigpio</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-plugin-linuxfs</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
         </dependency>
 
         <!-- include Pi4J Plugins (Platforms and I/O Providers) -->
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-library-pigpio</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-library-linuxfs</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
         </dependency>
 
         <!--
@@ -72,14 +72,14 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-library-pigpio</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
             <classifier>armhf</classifier>
             <type>so</type>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-library-pigpio</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
             <classifier>aarch64</classifier>
             <type>so</type>
         </dependency>
@@ -88,14 +88,14 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-library-linuxfs</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
             <classifier>armhf</classifier>
             <type>so</type>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-library-linuxfs</artifactId>
-            <version>${project.version}</version>
+            <version>2.2.1</version>
             <classifier>aarch64</classifier>
             <type>so</type>
         </dependency>
