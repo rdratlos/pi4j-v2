@@ -38,7 +38,7 @@ public class Console {
 
     private static final Logger logger = LoggerFactory.getLogger(Console.class);
 
-    private static final int LINE_WIDTH = 60;
+    private static final int LINE_WIDTH = 70;
     /** Constant <code>CLEAR_SCREEN_ESCAPE_SEQUENCE="\033[2J\033[1;1H"</code> */
     public static final String CLEAR_SCREEN_ESCAPE_SEQUENCE = "\033[2J\033[1;1H";
     /** Constant <code>ERASE_LINE_ESCAPE_SEQUENCE="\033[K"</code> */
