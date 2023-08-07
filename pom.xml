@@ -102,9 +102,10 @@
 
 	<!-- SOURCE CONTROL -->
 	<scm>
-		<developerConnection>scm:git:ssh://git@github.com/Pi4J/pi4j-v2.git</developerConnection>
-		<connection>scm:git:ssh://git@github.com/Pi4J/pi4j-v2.git</connection>
-		<url>https://github.com/Pi4J/pi4j-v2.git</url>
+		<developerConnection>scm:git:ssh://${server.scm.ssh.user}@${server.scm.ssh.host}/${server.scm.ssh.project}/pi4j-v2.git</developerConnection>
+		<connection>scm:git:ssh://${server.scm.ssh.user}@${server.scm.ssh.host}/${server.scm.ssh.project}/pi4j-v2.git</connection>
+		<url>https://${server.scm.ssh.host}/${server.scm.ssh.project}/pi4j-v2.git</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<!-- ISSUE MANAGEMENT -->
@@ -281,6 +282,12 @@
 
         <!-- REPORTS VERSIONS -->
         <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
+
+        <!-- Source Code Management -->
+        <server.scm.ssh.host>github.com</server.scm.ssh.host>
+        <server.scm.ssh.port>22</server.scm.ssh.port>
+        <server.scm.ssh.user>git</server.scm.ssh.user>
+        <server.scm.ssh.project>rdratlos</server.scm.ssh.project>
 
         <!-- SPECIAL ACCESS PROPERTIES -->
         <!-- These are only used by project committer/publisher -->
