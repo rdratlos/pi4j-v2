@@ -102,9 +102,9 @@
 
 	<!-- SOURCE CONTROL -->
 	<scm>
-		<developerConnection>scm:git:ssh://${server.scm.ssh.user}@${server.scm.ssh.host}/${server.scm.ssh.project}/pi4j-v2.git</developerConnection>
-		<connection>scm:git:ssh://${server.scm.ssh.user}@${server.scm.ssh.host}/${server.scm.ssh.project}/pi4j-v2.git</connection>
-		<url>https://${server.scm.ssh.host}/${server.scm.ssh.project}/pi4j-v2.git</url>
+		<developerConnection>scm:git:ssh://${server.scm.ssh.user}@${server.scm.host}/${server.scm.project}/pi4j-v2.git</developerConnection>
+		<connection>scm:git:https://${server.scm.host}/${server.scm.project}/pi4j-v2.git</connection>
+		<url>https://${server.scm.host}/${server.scm.project}/pi4j-v2.git</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -267,7 +267,7 @@
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-        <maven-scm-plugin.version>1.11.2</maven-scm-plugin.version>
+        <maven-scm-plugin.version>2.0.1</maven-scm-plugin.version>
         <maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
         <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
@@ -284,10 +284,10 @@
         <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
 
         <!-- Source Code Management -->
-        <server.scm.ssh.host>github.com</server.scm.ssh.host>
+        <server.scm.host>github.com</server.scm.host>
         <server.scm.ssh.port>22</server.scm.ssh.port>
         <server.scm.ssh.user>git</server.scm.ssh.user>
-        <server.scm.ssh.project>rdratlos</server.scm.ssh.project>
+        <server.scm.project>rdratlos</server.scm.project>
 
         <!-- SPECIAL ACCESS PROPERTIES -->
         <!-- These are only used by project committer/publisher -->
