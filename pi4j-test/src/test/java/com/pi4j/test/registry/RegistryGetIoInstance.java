@@ -36,6 +36,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.slf4j.simple.SimpleLogger;
+
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class RegistryGetIoInstance {
@@ -47,7 +49,7 @@ public class RegistryGetIoInstance {
 
     @BeforeAll
     public void beforeTest() throws Pi4JException {
-        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "INFO");
+        System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "INFO");
 
         // initialize Pi4J with an auto context
         // An auto context includes AUTO-DETECT BINDINGS enabled
