@@ -36,6 +36,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.slf4j.simple.SimpleLogger;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class AutoProvidersTest {
@@ -45,7 +46,7 @@ public class AutoProvidersTest {
     @BeforeAll
     public void beforeTest() {
 
-        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
+        System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
 
         // initialize Pi4J with an auto context
         // An auto context includes AUTO-DETECT BINDINGS enabled
