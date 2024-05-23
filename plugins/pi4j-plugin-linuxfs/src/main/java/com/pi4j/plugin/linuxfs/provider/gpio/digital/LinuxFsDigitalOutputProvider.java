@@ -10,7 +10,7 @@ package com.pi4j.plugin.linuxfs.provider.gpio.digital;
  * This file is part of the Pi4J project. More information about
  * this project can be found here:  https://pi4j.com/
  * **********************************************************************
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -27,10 +27,8 @@ package com.pi4j.plugin.linuxfs.provider.gpio.digital;
  * #L%
  */
 
-import com.pi4j.io.gpio.digital.DigitalOutputConfig;
 import com.pi4j.io.gpio.digital.DigitalOutputProvider;
 import com.pi4j.plugin.linuxfs.LinuxFsPlugin;
-import java.io.IOException;
 
 /**
  * <p>LinuxFsDigitalOutputProvider interface.</p>

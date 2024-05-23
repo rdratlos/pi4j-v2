@@ -70,7 +70,7 @@ public class LinuxFsDigitalOutputProviderImpl extends DigitalOutputProviderBase 
             throw new ProviderException(e);
         }
         try {
-            Thread.sleep(50);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new ProviderException(e);
         }
