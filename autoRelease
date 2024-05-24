@@ -44,8 +44,14 @@ fi
 echo -e "INFO: Current pom version is ${currentPomVersion}"
 
 # find which major/minor version we are building
-releaseVersion=$(echo -n "$releaseBranch" | cut -d '/' -f 2)
+releaseVersion=$(echo -n "$releaseBranch" | cut -d '/' -f 2 | awk -F'-' '{print $1}')
+releaseSuffix=$(echo -n "$releaseBranch" | cut -d '/' -f 2 | awk -F'-' '{print $2}')
+tagSuffix=""
 echo -e "INFO: releaseVersion: ${releaseVersion}"
+if [ -n "$releaseSuffix" ]; then
+  echo -e "INFO: releaseSuffix: ${releaseSuffix}"
+  tagSuffix="-${releaseSuffix}"
+fi
 if [[ "${releaseVersion}" == "${releaseBranch}" ]] ; then
   lastTag=$(git for-each-ref --format="%(refname)" --sort=-taggerdate --count=1 refs/tags | cut -d '/' -f 3)
   if [[ "${lastTag}" == "" ]] ; then
@@ -142,7 +148,7 @@ trap cleanup EXIT
 
 
 # Confirm
-echo -e "INFO: Do you want to create release/tag ${newVersion} from release branch ${releaseBranch}? [Y/n]"
+echo -e "INFO: Do you want to create release/tag ${newVersion}${tagSuffix} from release branch ${releaseBranch}? [Y/n]"
 read a
 if [[ "${a}" != "" ]] && [[ "${a,,}" != "y" ]] ; then
   exit 0
@@ -230,7 +236,7 @@ if ! git commit -m "[Project] Set new version ${newVersion}" ; then
   echo -e "ERROR: Failed to git commit"
   exit 1
 fi
-if ! git tag --sign --message "[Project] New Version ${newVersion}" "${newVersion}" ; then
+if ! git tag --sign --message "[Project] New Version ${newVersion}" "${newVersion}${tagSuffix}" ; then
   echo -e "ERROR: Failed to git tag"
   exit 1
 fi
@@ -281,9 +287,9 @@ if ! git push origin "${releaseBranch}" --follow-tags ; then
   echo -e "ERROR: Failed to push changes"
   exit 1
 fi
-echo -e "\nINFO: Pushed Release/Tag ${newVersion}"
+echo -e "\nINFO: Pushed Release/Tag ${newVersion}${tagSuffix}"
 
 
 rm -f "${logFile}"
-echo -e "\nINFO: Release/Tag ${newVersion} created."
+echo -e "\nINFO: Release/Tag ${newVersion}${tagSuffix} created."
 exit 0
