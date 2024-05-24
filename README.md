@@ -16,6 +16,16 @@ Project Map: [![Project Map](https://sourcespy.com/shield.svg)](https://sourcesp
 
 ---
 
+## Project Information for V2 of Pi4J with Addon-board Extensions
+
+Java I/O library that extends and fixes [pi4j](https://github.com/Pi4J/pi4j-v2). Following extensions have been implemented:
+
+* Framework for better support of Raspberry Pi expansion board projects
+* LinuxFS digital output GPIO
+
+See [Servo PWM Pi](https://github.com/rdratlos/pi4j-plugin-servopwmpi) for an example project that uses this library to control the Servo PWM Pi Raspberry Pi expansion board from https://www.abelectronics.co.uk.
+
+
 ## Project Information for V2 of Pi4J
 
 Project website: [pi4j.com](https://pi4j.com/).
