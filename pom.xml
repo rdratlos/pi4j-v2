@@ -285,7 +285,7 @@
         <maven-gpg-plugin.version>3.2.1</maven-gpg-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-        <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
         <maven-resource-plugin.version>3.2.0</maven-resource-plugin.version>
         <maven-scm-plugin.version>1.11.2</maven-scm-plugin.version>
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
@@ -430,10 +430,8 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven-release-plugin.version}</version>
                     <configuration>
-                        <tagNameFormat>release/@{project.version}</tagNameFormat>
-                        <pushChanges>false</pushChanges>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <arguments>-Drelease-build</arguments>
+                        <arguments>-Dmaven.deploy.skip=true</arguments>
                     </configuration>
                 </plugin>
 
