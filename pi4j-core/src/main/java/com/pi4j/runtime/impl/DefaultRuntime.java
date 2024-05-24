@@ -31,6 +31,7 @@ import com.pi4j.event.*;
 import com.pi4j.exception.InitializeException;
 import com.pi4j.exception.ShutdownException;
 import com.pi4j.extension.Plugin;
+import com.pi4j.extension.addonboard.AddOnBoard;
 import com.pi4j.extension.impl.DefaultPluginService;
 import com.pi4j.extension.impl.PluginStore;
 import com.pi4j.io.IOType;
@@ -295,6 +296,39 @@ public class DefaultRuntime implements Runtime {
                         // unable to initialize this provider instance
                         logger.error("unable to 'initialize()' plugin: [{}]; {}", plugin.getClass().getName(),
                             ex.getMessage(), ex);
+                    }
+                }
+
+                // detect available Pi4J Add-on Boards by scanning the classpath looking for add-on board instances
+                var addonBoards = ServiceLoader.load(AddOnBoard.class);
+                for (var addonBoard : addonBoards) {
+                    if (addonBoard == null)
+                        continue;
+
+                    logger.trace("detected add-on board: [{}] in classpath; calling 'initialize()'",
+                            addonBoard.getClass().getName());
+                    try {
+                        // add plugin to internal cache
+                        this.plugins.add(addonBoard);
+
+                        PluginStore store = new PluginStore();
+                        addonBoard.initialize(DefaultPluginService.newInstance(this.context(), store));
+
+                        // if auto-detect providers is enabled,
+                        // then add any detected providers to the collection to load
+                        if(context.config().autoDetectProviders())
+                            store.providers.forEach(provider -> addProvider(provider, providers));
+
+                        // if auto-detect platforms is enabled,
+                        // then add any detected platforms to the collection to load
+                        if(context.config().autoDetectPlatforms())
+                            platforms.addAll(store.platforms);
+
+                    } catch (Exception ex) {
+                        // unable to initialize this provider instance
+                        logger.error("unable to 'initialize()' add-on board: [{}]; {}",
+                                addonBoard.getClass().getName(), ex.getMessage(), ex);
+                        continue;
                     }
                 }
             }
