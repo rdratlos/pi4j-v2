@@ -50,7 +50,7 @@ if ! git checkout "${branch}" ; then
   echo "WARN: Failed to checkout target branch ${branch}"
   echo -e "WARN: Do you want to create target branch ${branch} from branch ${source_branch}? [Y/n]"
   read a
-  if [[ "${a}" != "" ]] && [[ "${a}" != "y" ]] ; then
+  if [[ "${a}" != "" ]] && [[ "${a,,}" != "y" ]] ; then
     exit 0
   fi
 

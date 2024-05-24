@@ -144,7 +144,7 @@ trap cleanup EXIT
 # Confirm
 echo -e "INFO: Do you want to create release/tag ${newVersion} from release branch ${releaseBranch}? [Y/n]"
 read a
-if [[ "${a}" != "" ]] && [[ "${a}" != "y" ]] ; then
+if [[ "${a}" != "" ]] && [[ "${a,,}" != "y" ]] ; then
   exit 0
 fi
 
