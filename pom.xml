@@ -102,9 +102,9 @@
 
 	<!-- SOURCE CONTROL -->
 	<scm>
-		<developerConnection>scm:git:ssh://git@github.com/Pi4J/pi4j-v2.git</developerConnection>
-		<connection>scm:git:ssh://git@github.com/Pi4J/pi4j-v2.git</connection>
-		<url>https://github.com/Pi4J/pi4j-v2.git</url>
+		<developerConnection>scm:git:ssh://${server.scm.ssh.user}@${server.scm.host}/${server.scm.project}/pi4j-v2.git</developerConnection>
+		<connection>scm:git:https://${server.scm.host}/${server.scm.project}/pi4j-v2.git</connection>
+		<url>https://${server.scm.host}/${server.scm.project}/pi4j-v2.git</url>
 	</scm>
 
 	<!-- ISSUE MANAGEMENT -->
@@ -201,6 +201,12 @@
         <!-- used internally; do not change value here -->
         <!-- BY DEFAULT, ENABLE THE 'CROSS-COMPILER' FOR NATIVE BUILDS -->
         <pi4j.native.compiler.effective>CROSS-COMPILER</pi4j.native.compiler.effective>
+
+        <!-- Source Code Management -->
+        <server.scm.host>github.com</server.scm.host>
+        <server.scm.ssh.port>22</server.scm.ssh.port>
+        <server.scm.ssh.user>git</server.scm.ssh.user>
+        <server.scm.project>rdratlos</server.scm.project>
 
         <!-- DEFAULT SETTINGS FOR REMOTELY BUILDING NATIVE LIBRARY ON A REMOTE PLATFORM -->
         <pi4j.default.host>192.168.1.1</pi4j.default.host>
