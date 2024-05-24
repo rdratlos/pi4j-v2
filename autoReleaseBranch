@@ -6,7 +6,7 @@ if [ $# != 3 ] ; then
   exit 1
 fi
 
-current_branch="$(pwb)"
+current_branch="$(git branch --show-current)"
 updateType="${1}"
 source_branch="${2}"
 branch="${3}"
@@ -50,7 +50,7 @@ if ! git checkout "${branch}" ; then
   echo "WARN: Failed to checkout target branch ${branch}"
   echo -e "WARN: Do you want to create target branch ${branch} from branch ${source_branch}? [Y/n]"
   read a
-  if [[ "${a}" != "" ]] && [[ "${a}" != "y" ]] ; then
+  if [[ "${a}" != "" ]] && [[ "${a,,}" != "y" ]] ; then
     exit 0
   fi
 
@@ -90,7 +90,7 @@ fi
 # have user update pom.xml if necessary
 echo -n "INFO: Merge complete. Please update versions in pom.xml: <enter>"
 read a
-if ! editor ./pom.xml ; then
+if ! $EDITOR ./pom.xml ; then
   echo "ERROR: pom.xml failed"
   exit 1
 fi
@@ -118,7 +118,7 @@ fi
 
 # now perform autoRelease
 echo "INFO: Starting auto release on branch ${branch}..."
-if ! autoRelease "${updateType}" "${branch}" ; then
+if ! ./autoRelease "${updateType}" "${branch}" ; then
   echo "ERROR: Failed to perform auto release!"
   exit 1
 fi
