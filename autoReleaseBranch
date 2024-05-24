@@ -6,7 +6,7 @@ if [ $# != 3 ] ; then
   exit 1
 fi
 
-current_branch="$(pwb)"
+current_branch="$(git branch --show-current)"
 updateType="${1}"
 source_branch="${2}"
 branch="${3}"

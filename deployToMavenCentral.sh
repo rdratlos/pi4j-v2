@@ -39,7 +39,7 @@ fi
 echo
 echo
 
-current_branch=$(pwb)
+current_branch=$(git branch --show-current)
 
 # Checkout tag
 echo -e "\nINFO: Checking out tag ${releaseVersion}"
