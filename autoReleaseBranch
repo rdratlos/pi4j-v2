@@ -118,7 +118,7 @@ fi
 
 # now perform autoRelease
 echo "INFO: Starting auto release on branch ${branch}..."
-if ! autoRelease "${updateType}" "${branch}" ; then
+if ! ./autoRelease "${updateType}" "${branch}" ; then
   echo "ERROR: Failed to perform auto release!"
   exit 1
 fi
