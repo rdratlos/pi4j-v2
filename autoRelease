@@ -52,7 +52,7 @@ if [ -n "$releaseSuffix" ]; then
   echo -e "INFO: releaseSuffix: ${releaseSuffix}"
   tagSuffix="-${releaseSuffix}"
 fi
-if [[ "${releaseVersion}" == "${releaseBranch}" ]] ; then
+if [[ "${releaseVersion}${tagSuffix}" == "${releaseBranch}" ]] ; then
   lastTag=$(git for-each-ref --format="%(refname)" --sort=-taggerdate --count=1 refs/tags | cut -d '/' -f 3)
   if [[ "${lastTag}" == "" ]] ; then
     echo -e "WARN: No tag yet, using pom version ${currentPomVersion} without -SNAPSHOT"
@@ -89,8 +89,8 @@ else
   done
 
   if [[ "${lastTag}" == "" ]] ; then
-    echo -e "WARN: There is no last tag for releaseVersion: ${releaseVersion}, thus using initial version ${releaseVersion}"
-    lastTag=${releaseVersion}
+    echo -e "WARN: There is no last tag for releaseVersion: ${${expectedMajorVersion}}.${expectedMinorVersion}.x, thus using initial version ${releaseVersion}"
+    lastTag=${releaseVersion}${tagSuffix}
     updateType="NONE"
   else
     echo -e "INFO: Previous tag: ${lastTag}"
@@ -135,6 +135,27 @@ fi
 
 # build new version
 newVersion="${majorVersion}.${minorVersion}.${updateVersion}"
+pomReleaseVersion="${currentPomVersion/-SNAPSHOT/}"
+if [[ "newVersion" != "pomReleaseVersion" ]] ;then
+  echo "WARN: POM version and requested release version differ."
+  PS3='Please select the release version to apply: '
+  versions=("${newVersion} (requested)" "${pomReleaseVersion} (POM)" "Quit")
+  select v in "${versions[@]}"; do
+    case $v in
+      "${newVersion} (requested)")
+        break
+        ;;
+      "${pomReleaseVersion} (POM)")
+        newVersion="${pomReleaseVersion}"
+        break
+        ;;
+      "Quit")
+        exit 0
+        ;;
+      *) echo "Invalid option $REPLY";;
+    esac
+  done
+fi
 
 
 # cleanup trap
@@ -244,8 +265,8 @@ fi
 
 # local install
 echo -e "\nINFO: Installing new version..."
-if ! git checkout "${newVersion}" ; then
-  echo -e "ERROR: Failed to checkout tag ${newVersion}"
+if ! git checkout "${newVersion}${tagSuffix}" ; then
+  echo -e "ERROR: Failed to checkout tag ${newVersion}${tagSuffix}"
   exit 1
 fi
 if ! mvn source:jar install -DskipTests ${MVN_PROFILES} > /dev/null ; then
