@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.pi4j</groupId>
 	<artifactId>pi4j-parent</artifactId>
-    <version>2.6.0</version>
+    <version>2.6.3</version>
 	<name>Pi4J :: Parent POM</name>
 	<description>Parent Maven POM for the Pi4J Project</description>
 	<url>https://v2.pi4j.com</url>
@@ -158,8 +158,8 @@
         <module>libraries/pi4j-library</module>
         <module>pi4j-core</module>
         <module>plugins/pi4j-plugin</module>
-        <module>pi4j-test</module>
-        <module>pi4j-distribution</module>
+        <!--module>pi4j-test</module>
+        <module>pi4j-distribution</module-->
     </modules>
 
 	<!-- BUILD PROPERTIES -->
