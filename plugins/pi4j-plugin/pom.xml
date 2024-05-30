@@ -5,7 +5,7 @@
     <parent>
         <artifactId>pi4j-parent</artifactId>
         <groupId>com.pi4j</groupId>
-        <version>2.6.0</version>
+        <version>2.6.3</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -30,7 +30,7 @@
         <module>../pi4j-plugin-mock</module>
         <module>../pi4j-plugin-pigpio</module>
         <module>../pi4j-plugin-raspberrypi</module>
-        <module>../pi4j-plugin-linuxfs</module>
+        <!--module>../pi4j-plugin-linuxfs</module-->
         <module>../pi4j-plugin-gpiod</module>
     </modules>
 
