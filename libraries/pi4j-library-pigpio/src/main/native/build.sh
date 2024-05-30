@@ -51,9 +51,9 @@ fi
 
 # validate compatible CPU architecture
 ARCHITECTURE=$(uname -m)
-if [[ (("$ARCHITECTURE" != "aarch64") && ("$ARCHITECTURE" != "amd64") && ("$ARCHITECTURE" != "x86_64")) ]]; then
-    echo "This native build is only supported on Linux-based systems running on an Intel/AMD or ARM 64-bit platform."
-    echo "BUILD ABORTED; REASON: ARCHITECTURE='$ARCHITECTURE'; EXPECTED='aarch64|amd64|x86_64'"
+if [[ (("$ARCHITECTURE" != "aarch64") && ("$ARCHITECTURE" != "armv6l") && ("$ARCHITECTURE" != "amd64") && ("$ARCHITECTURE" != "x86_64")) ]]; then
+    echo "This native build is only supported on Linux-based systems running on an Intel/AMD or ARM platform."
+    echo "BUILD ABORTED; REASON: ARCHITECTURE='$ARCHITECTURE'; EXPECTED='aarch64|armv6l|amd64|x86_64'"
     exit 1
 fi
 
@@ -79,7 +79,7 @@ if [[ "${PI4J_BUILDER}" != "" ]]; then
    echo "Running inside a Pi4J Docker Builder image; [version=${PI4J_BUILDER}; arch=${PI4J_BUILDER_ARCH}]"
    echo "No need to check or install build environment prerequisites."
 else
-   # if this is a Linux-based system and a 64-bit Intel/AMD or ARM platform, then we can install the prerequisites
+   # if this is a Linux-based system and a Intel/AMD or ARM platform, then we can install the prerequisites
    # download and install development prerequisites
    ./build-prerequisites.sh
 fi
