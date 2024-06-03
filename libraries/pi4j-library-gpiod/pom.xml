@@ -12,6 +12,7 @@
 
     <!-- MAVEN ARTIFACT INFORMATION -->
     <artifactId>pi4j-library-gpiod</artifactId>
+    <version>2.6.3</version>
     <name>Pi4J :: LIBRARY  :: JNI Wrapper for GpioD Library</name>
     <description>Pi4J wrapper for the GpioD library</description>
     <packaging>jar</packaging>
